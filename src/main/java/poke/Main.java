@@ -12,7 +12,7 @@ public class Main {
        // System.out.println("Pronto para batalhar com " + meuPokeSal);
         PokeSal[] pokemons = treinador.escolhaPokemon();
 
-        System.out.println("Pokemon do Jogador 1: " + pokemons[0].getPokemon());
-        System.out.println("Pokemon do Jogador 2: " + pokemons[1].getPokemon());
+        System.out.println("Pokemon do Jogador 1: " + pokemons[0].getPokeSal());
+        System.out.println("Pokemon do Jogador 2: " + pokemons[1].getPokeSal());
     }
 }

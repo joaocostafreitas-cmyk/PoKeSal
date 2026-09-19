@@ -16,18 +16,21 @@ public class Treinador {
     	
    
         System.out.println("Jogado numeror "+(i + 1)+"Escolha seu pokemon inicial: ");
-        System.out.println("1 - " + PokemonRepository.poker.get(0).getPokemon());
-        System.out.println("2 - " + PokemonRepository.poker.get(1).getPokemon());
-        System.out.println("3 - " + PokemonRepository.poker.get(2).getPokemon());
+        System.out.println("1 - " + PokeSalRepository.poker.get(0).getPokeSal());
+        System.out.println("2 - " + PokeSalRepository.poker.get(1).getPokeSal());
+        System.out.println("3 - " + PokeSalRepository.poker.get(2).getPokeSal());
+ System.out.println("3 - " + PokeSalRepository.poker.get(3).getPokeSal());
+  System.out.println("3 - " + PokeSalRepository.poker.get(4).getPokeSal());
+   System.out.println("3 - " + PokeSalRepository.poker.get(5).getPokeSal());
 
         while (true) {
         	
             int escolha = sc.nextInt();
 
-            if (escolha >= 1 && escolha <= 3) {
+            if (escolha >= 1 && escolha <= 6) {
             	
-                 escolhido[i] = PokemonRepository.poker.get(escolha - 1);
-                System.out.println("Você escolheu o " + escolhido[i].getPokemon() + "!");
+                 escolhido[i] = PokeSalRepository.poker.get(escolha - 1);
+                System.out.println("Você escolheu o " + escolhido[i].getPokeSal() + "!");
                 break;
             }
             
