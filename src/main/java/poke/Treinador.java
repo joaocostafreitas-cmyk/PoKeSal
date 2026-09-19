@@ -17,6 +17,8 @@ public class Treinador {
         System.out.println("6 - " + PokeSalRepository.poker.get(5).getPokeSal());
 
 
+
+
         while (true) {
             int escolha = sc.nextInt();
 
