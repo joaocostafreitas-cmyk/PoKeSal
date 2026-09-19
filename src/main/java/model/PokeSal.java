@@ -19,7 +19,7 @@ public class PokeSal {
         this.tipoElemental = tipoElemental;
     }
 
-    public String getPokemon() { return pokemon; }
+    public String getPokeSal() { return pokemon; }
     public int getHP() { return hp; }
     public void setHP(int hp) { this.hp = hp; }
     public int getATK() { return atk; }
