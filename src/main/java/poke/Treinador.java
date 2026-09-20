@@ -1,6 +1,7 @@
 package poke;
 
 import model.Acessorio;
+import model.AtributoBonus;
 import model.PokeSal;
 
 import java.util.Scanner;
@@ -11,7 +12,7 @@ public class Treinador {
         int jogadores=2;
         Scanner sc = new Scanner(System.in);
 
-        PokeSal[]escolhido = new PokeSal[jogadores];
+        PokeSal[]pokesalEscolhido = new PokeSal[jogadores];
 
         for(int i=0;i<jogadores;i++) {
 
@@ -30,8 +31,8 @@ public class Treinador {
 
                 if (escolha >= 1 && escolha <= 6) {
 
-                    escolhido[i] = PokeSalRepository.poker.get(escolha - 1);
-                    System.out.println("Você escolheu o " + escolhido[i].getPokeSal() + "!");
+                    pokesalEscolhido[i] = PokeSalRepository.poker.get(escolha - 1);
+                    System.out.println("Você escolheu o " + pokesalEscolhido[i].getPokeSal() + "!");
                     break;
                 }
 
@@ -39,15 +40,15 @@ public class Treinador {
             }
 
         }
-        return escolhido;
+        return pokesalEscolhido;
     }
 
-    public void escolhaAcessorio(PokeSal[] escolhido) {
+    public void escolhaAcessorio(PokeSal[] pokesalEscolhido) {
         Scanner sc = new Scanner(System.in);
 
-        for (int i = 0; i < escolhido.length; i++) {
+        for (int i = 0; i < pokesalEscolhido.length; i++) {
 
-            System.out.println("Jogador numero " + (i + 1) + ", escolha um acessório para " + escolhido[i].getPokeSal() + ":");
+            System.out.println("Jogador numero " + (i + 1) + ", escolha um acessório para " + pokesalEscolhido[i].getPokeSal() + ":");
             System.out.println("1 - " + AcessorioRepository.acessorios.get(0));
             System.out.println("2 - " + AcessorioRepository.acessorios.get(1));
             System.out.println("3 - " + AcessorioRepository.acessorios.get(2));
@@ -59,8 +60,18 @@ public class Treinador {
                 if (escolha >= 1 && escolha <= 3) {
 
                     Acessorio acessorioEscolhido = AcessorioRepository.acessorios.get(escolha - 1);
-                    escolhido[i].getAcessorio(acessorioEscolhido);
-                    System.out.println(escolhido[i].getPokeSal() + " equipou " + acessorioEscolhido.getnome() + "!");
+                    pokesalEscolhido[i].getAcessorio(acessorioEscolhido);
+                    if (acessorioEscolhido.getAtributo() == AtributoBonus.ATAQUE) {
+                        pokesalEscolhido[i].setATK(pokesalEscolhido[i].getATK()+ acessorioEscolhido.getValorBonus());
+
+                    }
+                    if (acessorioEscolhido.getAtributo() == AtributoBonus.VELOCIDADE){
+                        pokesalEscolhido[i].setSPD(pokesalEscolhido[i].getSPD()+ acessorioEscolhido.getValorBonus() );
+                    }
+                    if(acessorioEscolhido.getAtributo() == AtributoBonus.DEFESA){
+                        pokesalEscolhido[i].setDefesa(pokesalEscolhido[i].getDEF() + acessorioEscolhido.getValorBonus() );
+                    }
+                    System.out.println(pokesalEscolhido[i].getPokeSal() + " equipou " + acessorioEscolhido.getnome() + "!");
                     break;
                 }
 

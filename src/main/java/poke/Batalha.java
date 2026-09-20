@@ -2,17 +2,16 @@ package poke;
 
 import model.PokeSal;
 import model.Terreno;
+import model.StatusEfeito;
 
 public class Batalha {
 
     private PokeSal pokemon1;
     private PokeSal pokemon2;
 
-    // Guardamos o HP inicial de cada um para resetar a cada rodada nova
     private int hpInicial1;
     private int hpInicial2;
 
-    // Contador de vitórias de cada treinador
     private int vitoriasTreinador1 = 0;
     private int vitoriasTreinador2 = 0;
 
@@ -24,19 +23,16 @@ public class Batalha {
         this.hpInicial2 = pokemon2.getHP();
     }
 
-    // Método principal: roda as rodadas até alguém vencer 2 vezes
     public void iniciarBatalha() {
 
-        // Terrenos já definidos, um para cada rodada (o jogador não escolhe)
         Terreno[] terrenos = {
-                Terreno.ASFALTO_QUENTE,  // rodada 1
-                Terreno.POCA_CHUVA,      // rodada 2
-                Terreno.CANTEIRO_CENTRAL // rodada 3 (só acontece se der empate)
+                Terreno.ASFALTO_QUENTE,
+                Terreno.POCA_CHUVA,
+                Terreno.CANTEIRO_CENTRAL
         };
 
         int rodada = 0;
 
-        // Enquanto ninguém tiver 2 vitórias, continua jogando rodadas
         while (vitoriasTreinador1 < 2 && vitoriasTreinador2 < 2) {
 
             Terreno terrenoAtual = terrenos[rodada];
@@ -44,74 +40,102 @@ public class Batalha {
 
             System.out.println("\n--- Rodada " + rodada + " | Terreno: " + terrenoAtual + " ---");
 
-            // Reseta o HP dos pokemons no começo da rodada
             pokemon1.setHP(hpInicial1);
             pokemon2.setHP(hpInicial2);
 
             jogarRodada(terrenoAtual);
         }
 
-        // Depois do while, alguém já tem 2 vitórias. Anuncia o vencedor:
         System.out.println("\n=== FIM DA BATALHA ===");
         if (vitoriasTreinador1 == 2) {
-            System.out.println("Treinador 1 venceu com o " + pokemon1.getPokemon() + "!");
+            System.out.println("Treinador 1 venceu com o " + pokemon1.getPokeSal() + "!");
         } else {
-            System.out.println("Treinador 2 venceu com o " + pokemon2.getPokemon() + "!");
+            System.out.println("Treinador 2 venceu com o " + pokemon2.getPokeSal() + "!");
         }
     }
 
-    // Joga uma rodada inteira: os dois trocam ataques até um deles perder todo o HP
     private void jogarRodada(Terreno terreno) {
 
-        // Enquanto os dois estiverem vivos, a batalha continua
         while (pokemon1.getHP() > 0 && pokemon2.getHP() > 0) {
 
-            // Pokemon 1 ataca o Pokemon 2
-            atacar(pokemon1, pokemon2, terreno);
+            PokeSal primeiro = (pokemon1.getSPDComStatus() >= pokemon2.getSPDComStatus()) ? pokemon1 : pokemon2;
+            PokeSal segundo = (primeiro == pokemon1) ? pokemon2 : pokemon1;
 
-            // Se o pokemon2 já morreu, não precisa ele atacar de volta
-            if (pokemon2.getHP() <= 0) {
+            atacar(primeiro, segundo, terreno);
+            aplicarRecuperacaoTerreno(primeiro, terreno, primeiro == pokemon1 ? hpInicial1 : hpInicial2);
+            aplicarEfeitosDeStatus(primeiro);
+
+            if (segundo.getHP() <= 0) {
                 break;
             }
 
-            // Pokemon 2 ataca o Pokemon 1
-            atacar(pokemon2, pokemon1, terreno);
+            atacar(segundo, primeiro, terreno);
+            aplicarRecuperacaoTerreno(segundo, terreno, segundo == pokemon1 ? hpInicial1 : hpInicial2);
+            aplicarEfeitosDeStatus(segundo);
         }
 
-        // Verifica quem ganhou a rodada e soma o ponto
         if (pokemon1.getHP() > 0) {
             vitoriasTreinador1++;
-            System.out.println("Vencedor da rodada: " + pokemon1.getPokemon());
+            System.out.println("Vencedor da rodada: " + pokemon1.getPokeSal());
         } else {
             vitoriasTreinador2++;
-            System.out.println("Vencedor da rodada: " + pokemon2.getPokemon());
+            System.out.println("Vencedor da rodada: " + pokemon2.getPokeSal());
         }
 
         System.out.println("Placar -> Treinador 1: " + vitoriasTreinador1
                 + " x " + vitoriasTreinador2 + " : Treinador 2");
     }
 
-    // Um pokemon ataca o outro, aplicando o bônus de dano do terreno
     private void atacar(PokeSal atacante, PokeSal defensor, Terreno terreno) {
 
-        // Dano simples: ataque menos defesa (nunca menor que 1)
-        int dano = atacante.getATK() - defensor.getDEF();
+        double efetividade = atacante.getTipoElemental().efetividadeContra(defensor.getTipoElemental());
+
+        int dano = atacante.getATKComStatus() - defensor.getDEFComAcessorio();
         if (dano < 1) {
             dano = 1;
         }
 
-        // Aplica o bônus do terreno (ex: fogo no asfalto quente causa mais dano)
         double bonus = terreno.bonusDano(atacante.getTipoElemental());
-        dano = (int) (dano * bonus);
+        dano = (int) (dano * efetividade * bonus);
 
-        // Aplica o dano no defensor
         int hpRestante = defensor.getHP() - dano;
         if (hpRestante < 0) {
             hpRestante = 0;
         }
         defensor.setHP(hpRestante);
 
-        System.out.println(atacante.getPokemon() + " atacou " + defensor.getPokemon()
+        System.out.println(atacante.getPokeSal() + " atacou " + defensor.getPokeSal()
                 + " e causou " + dano + " de dano! HP restante: " + defensor.getHP());
+    }
+
+    private void aplicarRecuperacaoTerreno(PokeSal pokemon, Terreno terreno, int hpMaximo) {
+
+        double percentualRecuperado = terreno.recuperacaoHp(pokemon.getTipoElemental());
+
+        if (percentualRecuperado > 0) {
+            int cura = (int) (hpMaximo * percentualRecuperado);
+            int novoHP = Math.min(hpMaximo, pokemon.getHP() + cura);
+            pokemon.setHP(novoHP);
+            System.out.println(pokemon.getPokeSal() + " recuperou " + cura + " de HP no Canteiro Central!");
+        }
+    }
+
+    private void aplicarEfeitosDeStatus(PokeSal pokemon) {
+        switch (pokemon.getStatus()) {
+            case QUEIMADO:
+                int danoQueimadura = (int) (pokemon.getHP() * 0.05);
+                pokemon.setHP(Math.max(0, pokemon.getHP() - danoQueimadura));
+                System.out.println(pokemon.getPokeSal() + " sofreu " + danoQueimadura + " de dano da queimadura!");
+                break;
+            case ENVENENADO:
+                int danoVeneno = (int) (pokemon.getHP() * 0.10);
+                pokemon.setHP(Math.max(0, pokemon.getHP() - danoVeneno));
+                System.out.println(pokemon.getPokeSal() + " sofreu " + danoVeneno + " de dano do veneno!");
+                break;
+            case PARALISADO:
+                break;
+            default:
+                break;
+        }
     }
 }
