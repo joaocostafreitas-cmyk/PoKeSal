@@ -1,33 +1,105 @@
-# Projeto POKESAL
+# PokeSal - Simulador de Batalha
 
-Este projeto é uma aplicação de backend construída com Node.js e TypeScript. Ele fornece uma API RESTful para gerenciar usuários em um sistema. As operações de CRUD (Create, Read, Update, Delete) são suportadas.
+Projeto acadêmico desenvolvido em Java para simular batalhas entre Pokésals, seguindo as regras de negócio definidas no projeto da disciplina.
 
-## Funcionalidades
+## Sobre o Projeto
 
-### :heavy_plus_sign: createUser
-Esta função é responsável por criar um novo usuário. Ela recebe um objeto contendo as informações do usuário (nome, email e senha) e retorna uma mensagem de sucesso se o usuário for criado com sucesso. Se ocorrer um erro durante a criação do usuário, uma mensagem de erro é retornada.
+O PokeSal é um sistema de simulação de batalhas por turnos entre treinadores. Cada treinador deve escolher um Pokésal inicial e participar de batalhas considerando atributos, tipos elementais, vantagens e desvantagens, velocidade, itens e efeitos do terreno.
 
-### :pencil2: Atualizar Usuário
-A função AtualizarUsuario permite atualizar as informações de um usuário existente. Ela recebe um ID de usuário e um objeto contendo as novas informações do usuário (nome, email e senha). Se a operação for bem-sucedida, ela retorna uma mensagem de sucesso. Caso contrário, ela retorna uma mensagem de erro.
+O projeto foi desenvolvido com foco em boas práticas de programação, organização do código, testes automatizados e qualidade de software.
 
-### :key: Login de Usuário
-A função loginUsuario permite que um usuário faça login no sistema. Ela recebe um email e uma senha, e retorna as informações do usuário se o login for bem-sucedido. Caso contrário, ela retorna uma mensagem de erro.
+## Pokésals Iniciais
 
-### :heavy_minus_sign: DeletarUsuario
-Esta função é responsável por deletar um usuário. Ela recebe um ID de usuário e retorna uma mensagem de sucesso se o usuário for deletado com sucesso. Se ocorrer um erro durante a exclusão do usuário, uma mensagem de erro é retornada.
+O treinador pode escolher apenas um dos seguintes Pokésals:
 
-### :mag: ListarUsuario
-Esta função é responsável por buscar um usuário pelo seu ID. Ela recebe um ID de usuário e retorna as informações do usuário se ele for encontrado. Se ocorrer um erro durante a busca do usuário, uma mensagem de erro é retornada.
+- BulbaSal
+- CharSal
+- SquirtSal
+- ChikoSal
+- CyndaSal
+- TotoSal
 
-## Como usar
+Cada Pokésal possui atributos como:
 
-Para usar este projeto, você precisa ter Node.js e npm instalados em seu sistema. Siga estas etapas:
+- HP
+- ATK
+- DEF
+- SPD (Velocidade)
+- Tipo Elemental
 
-1. Clone o repositório.
-2. Navegue até o diretório do projeto e execute `npm install` para instalar as dependências.
-3. Configure as variáveis de ambiente conforme necessário.
-4. Execute `npm start` para iniciar o servidor.
+## Tipos Elementais
 
-## Contribuindo
+O sistema possui três tipos elementais:
 
-Contribuições são bem-vindas! Por favor, leia as diretrizes de contribuição antes de enviar um pull request.
+- 🔥 Fogo
+- 💧 Água
+- 🌱 Planta
+
+As vantagens e desvantagens funcionam da seguinte forma:
+
+| Tipo | Forte contra | Fraco contra |
+|------|--------------|--------------|
+| Fogo | Planta | Água |
+| Água | Fogo | Planta |
+| Planta | Água | Fogo |
+
+Os golpes super efetivos possuem multiplicador de dano de `2.0x`, enquanto os golpes pouco efetivos possuem multiplicador de `0.5x`.
+
+## Sistema de Batalha
+
+As batalhas acontecem por turnos e a ordem dos ataques é determinada pelo atributo de velocidade (`SPD`) dos Pokésals.
+
+O sistema também contempla efeitos de status aplicados ao final dos turnos, como:
+
+- Queimado
+- Envenenado
+- Paralisado
+
+Cada efeito possui impacto específico nos atributos ou HP do Pokésal.
+
+## Efeitos do Terreno
+
+As batalhas podem sofrer influência do ambiente do estacionamento da UCSal:
+
+- **Asfalto Quente:** aumenta em 15% o dano de golpes do tipo Fogo.
+- **Poça de Chuva / Piso Escorregadio:** golpes de Água recebem efeito adicional de 10% de precisão ou dano.
+- **Canteiro Central:** Pokésals do tipo Planta recuperam 5% do HP máximo ao final de cada turno.
+
+## Sistema de Itens
+
+Cada treinador possui uma mochila para gerenciamento de itens de batalha.
+
+O treinador pode utilizar no máximo **2 itens por batalha** e o uso de um item consome o turno.
+
+Entre os exemplos de itens estão:
+
+- Potion
+- Super Potion
+- Antidote
+
+## Estrutura do Projeto
+
+O projeto possui classes responsáveis pela representação dos Pokésals, batalhas, treinadores, itens, mochila e diferentes modos de batalha.
+
+Entre as principais classes estão:
+
+```text
+model/
+├── Acessorio.java
+├── AtributoBonus.java
+├── Item.java
+├── PokeSal.java
+├── StatusEfeito.java
+├── Terreno.java
+├── TipoElemental.java
+└── ...
+
+poke/
+├── AcessorioRepository.java
+├── Batalha.java
+├── ItemRepository.java
+├── Main.java
+├── Mochila.java
+├── ModoAleatorio.java
+├── PokeSalRepository.java
+└── Treinador.java
