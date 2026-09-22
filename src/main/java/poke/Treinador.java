@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class Treinador {
 
     public PokeSal []  escolhaSeuPokeSal() {
+        
         int jogadores=2;
         Scanner sc = new Scanner(System.in);
 
@@ -17,7 +18,7 @@ public class Treinador {
         for(int i=0;i<jogadores;i++) {
 
 
-            System.out.println("Jogado numero "+(i + 1)+"Escolha seu pokemon inicial: ");
+            System.out.println("Jogado numero "+(i + 1)+" Escolha seu pokemon inicial: ");
             System.out.println("1 - " + PokeSalRepository.poker.get(0).getPokeSal());
             System.out.println("2 - " + PokeSalRepository.poker.get(1).getPokeSal());
             System.out.println("3 - " + PokeSalRepository.poker.get(2).getPokeSal());
@@ -40,6 +41,7 @@ public class Treinador {
             }
 
         }
+    
         return pokesalEscolhido;
     }
 

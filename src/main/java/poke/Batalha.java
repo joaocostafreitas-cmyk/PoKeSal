@@ -58,8 +58,16 @@ public class Batalha {
 
         while (pokemon1.getHP() > 0 && pokemon2.getHP() > 0) {
 
-            PokeSal primeiro = (pokemon1.getSPDComStatus() >= pokemon2.getSPDComStatus()) ? pokemon1 : pokemon2;
-            PokeSal segundo = (primeiro == pokemon1) ? pokemon2 : pokemon1;
+            PokeSal primeiro;
+            PokeSal segundo;
+
+            if (pokemon1.getSPDComStatus() >= pokemon2.getSPDComStatus()) {
+                primeiro = pokemon1;
+                segundo = pokemon2;
+            } else {
+                primeiro = pokemon2;
+                segundo = pokemon1;
+            }
 
             atacar(primeiro, segundo, terreno);
             aplicarRecuperacaoTerreno(primeiro, terreno, primeiro == pokemon1 ? hpInicial1 : hpInicial2);
