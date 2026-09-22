@@ -70,7 +70,8 @@ public class PokeSal {
     }
     @Override
     public String toString() {
-        return pokeSal + " [HP=" + hp + ", ATK=" + atk + ", Tipo=" + tipoElemental + "]";
+       return pokeSal + " [HP=" + hp + ", ATK=" + atk + ", DEF=" + def + ", SPD=" + spd + ", Tipo=" + tipoElemental + "]";
+
     }
 
     }

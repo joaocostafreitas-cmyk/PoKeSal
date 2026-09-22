@@ -1,21 +1,48 @@
 package poke;
 
+import java.util.Scanner;
+
 import model.PokeSal;
 
 public class Main {
 
     public static void main(String[] args) {
-    	
+
         Treinador treinador = new Treinador();
+        Scanner sc = new Scanner(System.in);
 
-        PokeSal[] PokeSal = treinador.escolhaSeuPokeSal();
+        int escolha;
+        PokeSal[] pokeSals;
 
-        System.out.println("Pokemon do Jogador 1: " + PokeSal[0].getPokeSal());
-        System.out.println("Pokemon do Jogador 2: " + PokeSal[1].getPokeSal());
+        System.out.println("Escolha 1 para Modo Normal e 2 para modo aleatorio ");
+        escolha = sc.nextInt();
 
-        treinador.escolhaAcessorio(PokeSal);
+        if (escolha == 1) {
 
-        Batalha batalha = new Batalha(PokeSal[0], PokeSal[1]);
+            pokeSals = treinador.escolhaSeuPokeSal();
+
+            System.out.println("Pokemon do Jogador 1: " + pokeSals[0].getPokeSal());
+            System.out.println("Pokemon do Jogador 2: " + pokeSals[1].getPokeSal());
+
+            treinador.escolhaAcessorio(pokeSals);
+
+        } else if (escolha == 2) {
+
+            ModoAleatorio modo = new ModoAleatorio();
+
+            pokeSals = modo.sortearPokeSal();
+            modo.sortearAcessorio(pokeSals);
+
+        } else {
+
+            System.out.println("deu ruim");
+            sc.close();
+            return;
+        }
+
+        Batalha batalha = new Batalha(pokeSals[0], pokeSals[1]);
         batalha.iniciarBatalha();
+
+        sc.close();
     }
 }

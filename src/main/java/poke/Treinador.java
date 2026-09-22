@@ -19,12 +19,12 @@ public class Treinador {
 
 
             System.out.println("Jogado numero "+(i + 1)+" Escolha seu pokemon inicial: ");
-            System.out.println("1 - " + PokeSalRepository.poker.get(0).getPokeSal());
-            System.out.println("2 - " + PokeSalRepository.poker.get(1).getPokeSal());
-            System.out.println("3 - " + PokeSalRepository.poker.get(2).getPokeSal());
-            System.out.println("4 - " + PokeSalRepository.poker.get(3).getPokeSal());
-            System.out.println("5 - " + PokeSalRepository.poker.get(4).getPokeSal());
-            System.out.println("6 - " + PokeSalRepository.poker.get(5).getPokeSal());
+            System.out.println("1 - " + PokeSalRepository.poker.get(0));
+            System.out.println("2 - " + PokeSalRepository.poker.get(1));
+            System.out.println("3 - " + PokeSalRepository.poker.get(2));
+            System.out.println("4 - " + PokeSalRepository.poker.get(3));
+            System.out.println("5 - " + PokeSalRepository.poker.get(4));
+            System.out.println("6 - " + PokeSalRepository.poker.get(5));
 
 
         while (true) {
@@ -33,7 +33,8 @@ public class Treinador {
                 if (escolha >= 1 && escolha <= 6) {
 
                     pokesalEscolhido[i] = PokeSalRepository.poker.get(escolha - 1);
-                    System.out.println("Você escolheu o " + pokesalEscolhido[i].getPokeSal() + "!");
+                      System.out.println("Você escolheu o " + pokesalEscolhido[i].getPokeSal() + "!");
+                    
                     break;
                 }
 
