@@ -75,6 +75,7 @@ public class Treinador {
                         pokesalEscolhido[i].setDefesa(pokesalEscolhido[i].getDEF() + acessorioEscolhido.getValorBonus() );
                     }
                     System.out.println(pokesalEscolhido[i].getPokeSal() + " equipou " + acessorioEscolhido.getnome() + "!");
+                    System.out.println("Status do pokesal agora e :"+pokesalEscolhido[i]);
                     break;
                 }
 

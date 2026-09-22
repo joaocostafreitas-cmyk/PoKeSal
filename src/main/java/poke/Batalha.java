@@ -2,7 +2,7 @@ package poke;
 
 import model.PokeSal;
 import model.Terreno;
-import model.StatusEfeito;
+
 
 public class Batalha {
 
