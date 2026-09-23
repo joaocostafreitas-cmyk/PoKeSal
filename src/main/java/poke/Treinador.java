@@ -89,14 +89,9 @@ public class Treinador {
 
                     Acessorio acessorioEscolhido =
                             AcessorioRepository.acessorios.get(escolha - 1);
+                    pokesalEscolhido[i].getAcessorio(acessorioEscolhido);
 
-                    pokesalEscolhido[i].getAcessorio(
-                            acessorioEscolhido
-                    );
-
-                    if (acessorioEscolhido.getAtributo()
-                            == AtributoBonus.ATAQUE) {
-
+                    if (acessorioEscolhido.getAtributo() == AtributoBonus.ATAQUE) {
                         pokesalEscolhido[i].setAtk(
                                 pokesalEscolhido[i].getAtk()
                                         + acessorioEscolhido.getValorBonus()
