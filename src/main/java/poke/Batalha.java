@@ -34,8 +34,8 @@ public class Batalha {
         this.mochila1 = mochila1;
         this.mochila2 = mochila2;
 
-        this.hpInicial1 = pokemon1.getHP();
-        this.hpInicial2 = pokemon2.getHP();
+        this.hpInicial1 = pokemon1.getHp();
+        this.hpInicial2 = pokemon2.getHp();
     }
 
     public void iniciarBatalha() {
@@ -61,8 +61,8 @@ public class Batalha {
                             + " ---"
             );
 
-            pokemon1.setHP(hpInicial1);
-            pokemon2.setHP(hpInicial2);
+            pokemon1.setHp(hpInicial1);
+            pokemon2.setHp(hpInicial2);
 
             jogarRodada(terrenoAtual);
         }
@@ -87,8 +87,8 @@ public class Batalha {
 
     private void jogarRodada(Terreno terreno) {
 
-        while (pokemon1.getHP() > 0
-                && pokemon2.getHP() > 0) {
+        while (pokemon1.getHp() > 0
+                && pokemon2.getHp() > 0) {
 
             PokeSal primeiro;
             PokeSal segundo;
@@ -132,7 +132,7 @@ public class Batalha {
                 aplicarEfeitosDeStatus(primeiro);
             }
 
-            if (segundo.getHP() <= 0) {
+            if (segundo.getHp() <= 0) {
                 break;
             }
 
@@ -155,7 +155,7 @@ public class Batalha {
             }
         }
 
-        if (pokemon1.getHP() > 0) {
+        if (pokemon1.getHp() > 0) {
 
             vitoriasTreinador1++;
 
@@ -279,13 +279,13 @@ public class Batalha {
         dano = (int) (dano * efetividade * bonus);
 
         int hpRestante =
-                defensor.getHP() - dano;
+                defensor.getHp() - dano;
 
         if (hpRestante < 0) {
             hpRestante = 0;
         }
 
-        defensor.setHP(hpRestante);
+        defensor.setHp(hpRestante);
 
         System.out.println(
                 atacante.getPokeSal()
@@ -294,7 +294,7 @@ public class Batalha {
                         + " e causou "
                         + dano
                         + " de dano! HP restante: "
-                        + defensor.getHP()
+                        + defensor.getHp()
         );
     }
 
@@ -319,10 +319,10 @@ public class Batalha {
             int novoHP =
                     Math.min(
                             hpMaximo,
-                            pokemon.getHP() + cura
+                            pokemon.getHp() + cura
                     );
 
-            pokemon.setHP(novoHP);
+            pokemon.setHp(novoHP);
 
             System.out.println(
                     pokemon.getPokeSal()
@@ -341,12 +341,12 @@ public class Batalha {
             case QUEIMADO:
 
                 int danoQueimadura =
-                        (int) (pokemon.getHP() * 0.05);
+                        (int) (pokemon.getHp() * 0.05);
 
-                pokemon.setHP(
+                pokemon.setHp(
                         Math.max(
                                 0,
-                                pokemon.getHP()
+                                pokemon.getHp()
                                         - danoQueimadura
                         )
                 );
@@ -363,12 +363,12 @@ public class Batalha {
             case ENVENENADO:
 
                 int danoVeneno =
-                        (int) (pokemon.getHP() * 0.10);
+                        (int) (pokemon.getHp() * 0.10);
 
-                pokemon.setHP(
+                pokemon.setHp(
                         Math.max(
                                 0,
-                                pokemon.getHP()
+                                pokemon.getHp()
                                         - danoVeneno
                         )
                 );

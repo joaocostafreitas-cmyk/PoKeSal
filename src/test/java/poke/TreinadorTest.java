@@ -32,13 +32,13 @@ System.out.println("depois");
 
     assertEquals("BulbaSal", pokesalEscolhido[0].getPokeSal());
     System.out.println("1 passou");
-    assertEquals(200, pokesalEscolhido[0].getHP());
+    assertEquals(200, pokesalEscolhido[0].getHp());
     System.out.println("2 passou");
-    assertEquals(100, pokesalEscolhido[0].getATK());
+    assertEquals(100, pokesalEscolhido[0].getAtk());
     System.out.println("3 passou");
-    assertEquals(50, pokesalEscolhido[0].getDEF());
+    assertEquals(50, pokesalEscolhido[0].getDef());
     System.out.println("4 passou");
-    assertEquals(25, pokesalEscolhido[0].getSPD());
+    assertEquals(25, pokesalEscolhido[0].getSpd());
     System.out.println("5 passou");
     assertEquals(TipoElemental.PLANTA, pokesalEscolhido[0].getTipoElemental());
     System.out.println("6 passou");

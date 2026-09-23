@@ -97,8 +97,8 @@ public class Treinador {
                     if (acessorioEscolhido.getAtributo()
                             == AtributoBonus.ATAQUE) {
 
-                        pokesalEscolhido[i].setATK(
-                                pokesalEscolhido[i].getATK()
+                        pokesalEscolhido[i].setAtk(
+                                pokesalEscolhido[i].getAtk()
                                         + acessorioEscolhido.getValorBonus()
                         );
                     }
@@ -106,8 +106,8 @@ public class Treinador {
                     if (acessorioEscolhido.getAtributo()
                             == AtributoBonus.VELOCIDADE) {
 
-                        pokesalEscolhido[i].setSPD(
-                                pokesalEscolhido[i].getSPD()
+                        pokesalEscolhido[i].setSpd(
+                                pokesalEscolhido[i].getSpd()
                                         + acessorioEscolhido.getValorBonus()
                         );
                     }
@@ -116,7 +116,7 @@ public class Treinador {
                             == AtributoBonus.DEFESA) {
 
                         pokesalEscolhido[i].setDefesa(
-                                pokesalEscolhido[i].getDEF()
+                                pokesalEscolhido[i].getDef()
                                         + acessorioEscolhido.getValorBonus()
                         );
                     }
