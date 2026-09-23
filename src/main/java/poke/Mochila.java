@@ -13,7 +13,7 @@ public class Mochila {
 
         if (itensUsados >= LIMITE_ITENS_POR_BATALHA) {
             System.out.println(
-                "Você já usou o limite máximo de 2 itens nesta batalha."
+                    "Você já usou o limite máximo de 2 itens nesta batalha."
             );
             return false;
         }
@@ -22,11 +22,17 @@ public class Mochila {
         itensUsados++;
 
         System.out.println(
-            pokeSal.getPokeSal() + " usou " + item.getnome() + "!"
+                pokeSal.getPokeSal()
+                        + " usou "
+                        + item.getnome()
+                        + "!"
         );
 
         System.out.println(
-            "Itens usados: " + itensUsados + "/2"
+                "Itens usados: "
+                        + itensUsados
+                        + "/"
+                        + LIMITE_ITENS_POR_BATALHA
         );
 
         return true;
@@ -39,4 +45,16 @@ public class Mochila {
     public boolean podeUsarItem() {
         return itensUsados < LIMITE_ITENS_POR_BATALHA;
     }
+
+    public static Mochila[] criarMochilas(int quantidadeJogadores) {
+
+        Mochila[] mochilas = new Mochila[quantidadeJogadores];
+
+        for (int i = 0; i < quantidadeJogadores; i++) {
+            mochilas[i] = new Mochila();
+        }
+
+        return mochilas;
+    }
 }
+

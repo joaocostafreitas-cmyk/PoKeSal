@@ -17,7 +17,10 @@ public class Main {
         PokeSal[] pokeSals;
         Mochila[] mochilas;
 
-        System.out.println("Escolha 1 para Modo Normal e 2 para Modo Aleatório:");
+        System.out.println(
+                "Escolha 1 para Modo Normal e 2 para Modo Aleatório:"
+        );
+
         escolha = sc.nextInt();
 
         if (escolha == 1) {
@@ -27,21 +30,17 @@ public class Main {
 
             treinador.escolhaAcessorio(pokeSals);
 
-            // Cria uma mochila para cada jogador
-            mochilas = new Mochila[2];
-
-            mochilas[0] = new Mochila();
-            mochilas[1] = new Mochila();
+            
+            mochilas = Mochila.criarMochilas(2);
 
         } else if (escolha == 2) {
 
-            // Modo Aleatório
+            
             pokeSals = modoAleatorio.sortearPokeSal();
 
             modoAleatorio.sortearAcessorio(pokeSals);
 
-            // Cria uma mochila para cada jogador
-            mochilas = modoAleatorio.criarMochilas();
+            mochilas = Mochila.criarMochilas(2);
 
         } else {
 
@@ -64,4 +63,3 @@ public class Main {
         sc.close();
     }
 }
-

@@ -94,23 +94,5 @@ public class ModoAleatorio {
         }
     }
 
-    public Mochila[] criarMochilas() {
-
-        int jogadores = 2;
-
-        Mochila[] mochilas = new Mochila[jogadores];
-
-        for (int i = 0; i < jogadores; i++) {
-
-            mochilas[i] = new Mochila();
-
-            System.out.println(
-                    "Mochila criada para o Jogador "
-                            + (i + 1) + "."
-            );
-        }
-
-        return mochilas;
-    }
 }
 
