@@ -6,93 +6,62 @@ import model.PokeSal;
 
 public class ModoAleatorio {
 
-    public PokeSal[] sortearPokeSal() {
+  public PokeSal[] sortearPokeSal() {
 
-        int jogadores = 2;
+    int jogadores = 2;
 
-        PokeSal[] pokesalEscolhido =
-                new PokeSal[jogadores];
+    PokeSal[] pokesalEscolhido = new PokeSal[jogadores];
 
-        for (int i = 0; i < jogadores; i++) {
+    for (int i = 0; i < jogadores; i++) {
 
-            int sorteio =
-                    (int) (Math.random()
-                            * PokeSalRepository.poker.size());
+      int sorteio = (int) (Math.random() * PokeSalRepository.poker.size());
+      pokesalEscolhido[i] = PokeSalRepository.poker.get(sorteio);
 
-            pokesalEscolhido[i] =
-                    PokeSalRepository.poker.get(sorteio);
-
-            System.out.println(
-                    "Jogador " + (i + 1)
-                            + " recebeu o Pokémon sorteado: "
-                            + pokesalEscolhido[i].getPokeSal()
-                            + "!"
-            );
-        }
-
-        return pokesalEscolhido;
+      System.out.println("Jogador " + (i + 1) + " recebeu o Pokémon sorteado: "
+          + pokesalEscolhido[i].getPokeSal() + "!");
     }
 
-    public void sortearAcessorio(
-            PokeSal[] pokesalEscolhido) {
+    return pokesalEscolhido;
+  }
 
-        for (int i = 0;
+  public void sortearAcessorio(PokeSal[] pokesalEscolhido) {
+
+    for (int i = 0;
                 i < pokesalEscolhido.length;
                 i++) {
 
-            int sorteio =
-                    (int) (Math.random()
-                            * AcessorioRepository.acessorios.size());
+      int sorteio = (int) (Math.random() * AcessorioRepository.acessorios.size());
 
-            Acessorio acessorioEscolhido =
-                    AcessorioRepository.acessorios.get(sorteio);
+      Acessorio acessorioEscolhido = AcessorioRepository.acessorios.get(sorteio);
 
-            pokesalEscolhido[i].getAcessorio(
-                    acessorioEscolhido
-            );
+      pokesalEscolhido[i].getAcessorio(acessorioEscolhido);
 
-            if (acessorioEscolhido.getAtributo()
-                    == AtributoBonus.ATAQUE) {
+      if (acessorioEscolhido.getAtributo() == AtributoBonus.ATAQUE) {
 
-                pokesalEscolhido[i].setATK(
-                        pokesalEscolhido[i].getATK()
+        pokesalEscolhido[i].setAtk(pokesalEscolhido[i].getAtk() 
+            + acessorioEscolhido.getValorBonus());
+      }
+
+      if (acessorioEscolhido.getAtributo() == AtributoBonus.VELOCIDADE) {
+
+        pokesalEscolhido[i].setSpd(pokesalEscolhido[i].getSpd()
                                 + acessorioEscolhido.getValorBonus()
-                );
-            }
+        );
+      }
 
-            if (acessorioEscolhido.getAtributo()
-                    == AtributoBonus.VELOCIDADE) {
+      if (acessorioEscolhido.getAtributo() == AtributoBonus.DEFESA) {
 
-                pokesalEscolhido[i].setSPD(
-                        pokesalEscolhido[i].getSPD()
-                                + acessorioEscolhido.getValorBonus()
-                );
-            }
+        pokesalEscolhido[i].setDefesa(pokesalEscolhido[i].getDef()
+                    + acessorioEscolhido.getValorBonus());
+      }
 
-            if (acessorioEscolhido.getAtributo()
-                    == AtributoBonus.DEFESA) {
+      System.out.println("Jogador " + (i + 1) + " teve sorteado o acessório: "
+                  + acessorioEscolhido.getnome() + " para o "
+                            + pokesalEscolhido[i].getPokeSal() + "!");
 
-                pokesalEscolhido[i].setDefesa(
-                        pokesalEscolhido[i].getDEF()
-                                + acessorioEscolhido.getValorBonus()
-                );
-            }
-
-            System.out.println(
-                    "Jogador " + (i + 1)
-                            + " teve sorteado o acessório: "
-                            + acessorioEscolhido.getnome()
-                            + " para o "
-                            + pokesalEscolhido[i].getPokeSal()
-                            + "!"
-            );
-
-            System.out.println(
-                    "Status do pokesal agora é: "
-                            + pokesalEscolhido[i]
-            );
-        }
+      System.out.println("Status do pokesal agora é: " + pokesalEscolhido[i]);
     }
+  }
 
 }
 
