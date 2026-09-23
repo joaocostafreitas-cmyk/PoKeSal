@@ -1,47 +1,67 @@
 package poke;
 
 import java.util.Scanner;
+
 import model.PokeSal;
 
 public class Main {
 
-  public static void main(String[] args) {
+    public static void main(String[] args) {
 
-    Treinador treinador = new Treinador();
-    Scanner sc = new Scanner(System.in);
+        Treinador treinador = new Treinador();
+        ModoAleatorio modoAleatorio = new ModoAleatorio();
 
-    int escolha;
-    PokeSal[] pokeSals;
+        Scanner sc = new Scanner(System.in);
 
-    System.out.println("Escolha 1 para Modo Normal e 2 para modo aleatorio ");
-    escolha = sc.nextInt();
+        int escolha;
+        PokeSal[] pokeSals;
+        Mochila[] mochilas;
 
-    if (escolha == 1) {
+        System.out.println("Escolha 1 para Modo Normal e 2 para Modo Aleatório:");
+        escolha = sc.nextInt();
 
-      pokeSals = treinador.escolhaSeuPokeSal();
+        if (escolha == 1) {
 
-      System.out.println("Pokemon do Jogador 1: " + pokeSals[0].getPokeSal());
-      System.out.println("Pokemon do Jogador 2: " + pokeSals[1].getPokeSal());
+            // Modo Normal
+            pokeSals = treinador.escolhaSeuPokeSal();
 
-      treinador.escolhaAcessorio(pokeSals);
+            treinador.escolhaAcessorio(pokeSals);
 
-    } else if (escolha == 2) {
+            // Cria uma mochila para cada jogador
+            mochilas = new Mochila[2];
 
-      ModoAleatorio modo = new ModoAleatorio();
+            mochilas[0] = new Mochila();
+            mochilas[1] = new Mochila();
 
-      pokeSals = modo.sortearPokeSal();
-      modo.sortearAcessorio(pokeSals);
+        } else if (escolha == 2) {
 
-    } else {
+            // Modo Aleatório
+            pokeSals = modoAleatorio.sortearPokeSal();
 
-      System.out.println("deu ruim");
-      sc.close();
-      return;
+            modoAleatorio.sortearAcessorio(pokeSals);
+
+            // Cria uma mochila para cada jogador
+            mochilas = modoAleatorio.criarMochilas();
+
+        } else {
+
+            System.out.println("Opção inválida.");
+            sc.close();
+            return;
+        }
+
+        System.out.println("\n=== INICIANDO BATALHA ===");
+
+        Batalha batalha = new Batalha(
+                pokeSals[0],
+                pokeSals[1],
+                mochilas[0],
+                mochilas[1]
+        );
+
+        batalha.iniciarBatalha();
+
+        sc.close();
     }
-
-    Batalha batalha = new Batalha(pokeSals[0], pokeSals[1]);
-    batalha.iniciarBatalha();
-
-    sc.close();
-  }
 }
+
