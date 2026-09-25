@@ -1,8 +1,9 @@
 
 # 🎮 PokeSal - Simulador de Batalha
 
-Link do video do youtube: https://youtu.be/c-tsDHOyI7E
+Link do video não listado do Youtube 🔴: https://youtu.be/c-tsDHOyI7E
 
+Link do diagrama UML 📋: https://app.diagrams.net/#G1lv2FYsnngrp2-LyfjmSByS8Oz3fnPhVd#%7B"pageId"%3A"q2NDj1pSNoo5LTh0LEM2"%7D
 
 O **PokeSal** é um sistema backend e simulador de batalhas por turnos desenvolvido em Java. Ele permite a simulação de combates entre treinadores e seus Pokésals, levando em consideração atributos, tipos elementais, vantagens e desvantagens, ordem de velocidade, itens de consumo e efeitos de terreno.
 
