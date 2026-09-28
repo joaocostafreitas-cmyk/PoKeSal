@@ -16,7 +16,7 @@ public enum Terreno {
     }
     return 1.0;
   }
-  public double recuperacaoHp(TipoElemental tipo) {
+  public double recuperacaoHp (TipoElemental tipo) {
 
     if (this == CANTEIRO_CENTRAL && tipo == TipoElemental.PLANTA) {
       return 0.05;

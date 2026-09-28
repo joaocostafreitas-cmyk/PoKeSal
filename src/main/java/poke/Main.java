@@ -1,7 +1,6 @@
 package poke;
 
 import java.util.Scanner;
-
 import model.PokeSal;
 
 public class Main {

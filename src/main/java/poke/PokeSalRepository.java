@@ -7,8 +7,7 @@ import model.TipoElemental;
 
 
 public class PokeSalRepository {
-    
-
+  
   public static List<PokeSal> poker = new ArrayList<>();
 
   static {
@@ -19,5 +18,18 @@ public class PokeSalRepository {
     poker.add(new PokeSal("ChikoSal", 200, 100, 50, 25, TipoElemental.PLANTA));
     poker.add(new PokeSal("CyndaSal", 200, 100, 50, 25, TipoElemental.FOGO));
     poker.add(new PokeSal("TotoSal", 200, 100, 50, 25, TipoElemental.AGUA));
+  }
+
+  public static PokeSal criarCopia(int escolha) {
+
+    PokeSal original = poker.get(escolha);
+    return new PokeSal(
+        original.getPokeSal(),
+        original.getHp(),
+        original.getAtk(),
+        original.getDef(),
+        original.getSpd(),
+        original.getTipoElemental()
+    );
   }
 }

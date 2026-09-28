@@ -1,47 +1,51 @@
 package poke;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import static org.junit.jupiter.api.Assertions.assertNotEquals; 
 
 import java.io.ByteArrayInputStream;
-
+import model.PokeSal;
+import model.TipoElemental;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import model.PokeSal;
-import model.TipoElemental;
 
 public class TreinadorTest {
 
-    Treinador treinador;
+  Treinador treinador;
 
-    @BeforeEach
+  @BeforeEach
     void configurar() {
-        treinador = new Treinador();
-    }
+    treinador = new Treinador();
 
-   @Test
+  }
+
+  @Test
 public void testEscolhaSeuPokeSal() {
 
-    String entrada = "1\n2\n";
+    System.out.println("1 Fase :");
+    String entrada = "1\n1\n";
     System.setIn(new ByteArrayInputStream(entrada.getBytes()));
 
-    System.out.println("antes");
+    System.out.println("2 entrada");
+
     PokeSal[] pokesalEscolhido = treinador.escolhaSeuPokeSal();
-System.out.println("depois");
+
+    System.out.println("3 escolha ");
 
     assertEquals("BulbaSal", pokesalEscolhido[0].getPokeSal());
-    System.out.println("1 passou");
-    assertEquals(200, pokesalEscolhido[0].getHp());
-    System.out.println("2 passou");
-    assertEquals(100, pokesalEscolhido[0].getAtk());
-    System.out.println("3 passou");
-    assertEquals(50, pokesalEscolhido[0].getDef());
-    System.out.println("4 passou");
-    assertEquals(25, pokesalEscolhido[0].getSpd());
-    System.out.println("5 passou");
-    assertEquals(TipoElemental.PLANTA, pokesalEscolhido[0].getTipoElemental());
-    System.out.println("6 passou");
 
+    System.out.println("4 primeiro passou");
+
+    assertEquals(200, pokesalEscolhido[0].getHp());
+    assertEquals(100, pokesalEscolhido[0].getAtk());
+    assertEquals(50, pokesalEscolhido[0].getDef());
+    assertEquals(25, pokesalEscolhido[0].getSpd());
+    assertEquals(TipoElemental.PLANTA, pokesalEscolhido[0].getTipoElemental());
+
+    System.out.println("2 Fase :");
+    assertNotEquals(pokesalEscolhido[1], pokesalEscolhido[0]);
+
+    System.out.println("6  Fim'-' ");
+  }
 }
-    }

@@ -77,7 +77,7 @@ public class PokeSal {
     this.status = status;
   }
 
-  public int getATKComStatus() {
+  public int getAkcComStatus() {
     int atkBase = (status == StatusEfeito.QUEIMADO) ? (int)(atk * 0.5) : atk;
     if (acessorio != null && acessorio.getAtributo() == AtributoBonus.ATAQUE) {
       atkBase += acessorio.getValorBonus();
@@ -85,7 +85,7 @@ public class PokeSal {
     return atkBase;
   }
 
-  public int getSPDComStatus() {
+  public int getSpdComStatus() {
     int spdBase = (status == StatusEfeito.PARALISADO) ? spd / 2 : spd;
     if (acessorio != null && acessorio.getAtributo() == AtributoBonus.VELOCIDADE) {
       spdBase += acessorio.getValorBonus();
@@ -93,7 +93,7 @@ public class PokeSal {
     return spdBase;
   }
 
-  public int getDEFComAcessorio() {
+  public int getDefComAcessorio() {
     if (acessorio != null && acessorio.getAtributo() == AtributoBonus.DEFESA) {
       return def + acessorio.getValorBonus();
     }

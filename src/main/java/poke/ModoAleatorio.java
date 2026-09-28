@@ -15,7 +15,7 @@ public class ModoAleatorio {
     for (int i = 0; i < jogadores; i++) {
 
       int sorteio = (int) (Math.random() * PokeSalRepository.poker.size());
-      pokesalEscolhido[i] = PokeSalRepository.poker.get(sorteio);
+      pokesalEscolhido[i] = PokeSalRepository.criarCopia(sorteio);
 
       System.out.println("Jogador " + (i + 1) + " recebeu o Pokémon sorteado: "
           + pokesalEscolhido[i].getPokeSal() + "!");
@@ -26,9 +26,7 @@ public class ModoAleatorio {
 
   public void sortearAcessorio(PokeSal[] pokesalEscolhido) {
 
-    for (int i = 0;
-                i < pokesalEscolhido.length;
-                i++) {
+    for (int i = 0; i < pokesalEscolhido.length; i++) {
 
       int sorteio = (int) (Math.random() * AcessorioRepository.acessorios.size());
 
@@ -45,8 +43,7 @@ public class ModoAleatorio {
       if (acessorioEscolhido.getAtributo() == AtributoBonus.VELOCIDADE) {
 
         pokesalEscolhido[i].setSpd(pokesalEscolhido[i].getSpd()
-                                + acessorioEscolhido.getValorBonus()
-        );
+            + acessorioEscolhido.getValorBonus());
       }
 
       if (acessorioEscolhido.getAtributo() == AtributoBonus.DEFESA) {

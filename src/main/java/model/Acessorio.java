@@ -6,7 +6,7 @@ public class Acessorio {
   private AtributoBonus atributo;
   private int valorBonus;
 
-  public Acessorio(String nome,  AtributoBonus atributo, int valorBonus) {
+  public Acessorio(String nome, AtributoBonus atributo, int valorBonus) {
     this.nome = nome;
     this.atributo = atributo;
     this.valorBonus = valorBonus;

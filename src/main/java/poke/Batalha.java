@@ -71,7 +71,7 @@ public class Batalha {
             Mochila mochilaPrimeiro;
             Mochila mochilaSegundo;
 
-            if (pokemon1.getSPDComStatus() >= pokemon2.getSPDComStatus()) {
+            if (pokemon1.getSpdComStatus() >= pokemon2.getSpdComStatus()) {
                 primeiro = pokemon1;
                 segundo = pokemon2;
 
@@ -157,7 +157,7 @@ public class Batalha {
 
     private void atacar(PokeSal atacante, PokeSal defensor, Terreno terreno) {
         double efetividade = atacante.getTipoElemental().efetividadeContra(defensor.getTipoElemental());
-        int dano = atacante.getATKComStatus() - defensor.getDEFComAcessorio();
+        int dano = atacante.getAkcComStatus() - defensor.getDefComAcessorio();
 
         if (dano < 1) {
             dano = 1;
