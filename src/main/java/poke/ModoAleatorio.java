@@ -15,7 +15,7 @@ public class ModoAleatorio {
     for (int i = 0; i < jogadores; i++) {
 
       int sorteio = (int) (Math.random() * PokeSalRepository.poker.size());
-      pokesalEscolhido[i] = PokeSalRepository.criarCopia(sorteio);
+      pokesalEscolhido[i] = PokeSalRepository.CriarCopia(sorteio);
 
       System.out.println("Jogador " + (i + 1) + " recebeu o Pokémon sorteado: "
           + pokesalEscolhido[i].getPokeSal() + "!");

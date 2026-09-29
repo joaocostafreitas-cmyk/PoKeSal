@@ -32,7 +32,7 @@ public class Treinador {
 
         if (escolha >= 1 && escolha <= 6) {
 
-          pokesalEscolhido[i] = PokeSalRepository.criarCopia(escolha - 1);
+          pokesalEscolhido[i] = PokeSalRepository.CriarCopia(escolha - 1);
 
           System.out.println("Você escolheu o " + pokesalEscolhido[i].getPokeSal() + "!");
           break;

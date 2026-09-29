@@ -20,16 +20,12 @@ public class PokeSalRepository {
     poker.add(new PokeSal("TotoSal", 200, 100, 50, 25, TipoElemental.AGUA));
   }
 
-  public static PokeSal criarCopia(int escolha) {
+  public static PokeSal CriarCopia(int escolha) {
 
     PokeSal original = poker.get(escolha);
-    return new PokeSal(
-        original.getPokeSal(),
-        original.getHp(),
-        original.getAtk(),
-        original.getDef(),
-        original.getSpd(),
-        original.getTipoElemental()
+    return new PokeSal(original.getPokeSal(), original.getHp(), original.getAtk(),
+          original.getDef(), original.getSpd(),
+      original.getTipoElemental()
     );
   }
 }
