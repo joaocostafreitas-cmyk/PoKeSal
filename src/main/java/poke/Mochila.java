@@ -27,9 +27,7 @@ public class Mochila {
 
   }
 
-  public int getItensUsados() {
-    return itensUsados;
-  }
+
 
   public boolean podeUsarItem() {
     return itensUsados < LIMITE_ITENS_POR_BATALHA;
@@ -42,7 +40,6 @@ public class Mochila {
     for (int i = 0; i < quantidadeJogadores; i++) {
       mochilas[i] = new Mochila();
     }
-
     return mochilas;
   }
 }

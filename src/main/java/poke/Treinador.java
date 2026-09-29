@@ -52,7 +52,7 @@ public class Treinador {
 
     for (int i = 0; i < pokesalEscolhido.length; i++) {
 
-      System.out.println("Jogador numero " + (i + 1) 
+      System.out.println("Jogador numero " + (i + 1)
            + ", escolha um acessório para " + pokesalEscolhido[i].getPokeSal() + ":");
 
       System.out.println("1 - " + AcessorioRepository.acessorios.get(0));
@@ -71,23 +71,23 @@ public class Treinador {
 
           if (acessorioEscolhido.getAtributo() == AtributoBonus.ATAQUE) {
 
-            pokesalEscolhido[i].setAtk(pokesalEscolhido[i].getAtk() 
+            pokesalEscolhido[i].setAtk(pokesalEscolhido[i].getAtk()
                 + acessorioEscolhido.getValorBonus());
           }
 
           if (acessorioEscolhido.getAtributo() == AtributoBonus.VELOCIDADE) {
 
-            pokesalEscolhido[i].setSpd(pokesalEscolhido[i].getSpd() 
+            pokesalEscolhido[i].setSpd(pokesalEscolhido[i].getSpd()
                    + acessorioEscolhido.getValorBonus());
           }
 
           if (acessorioEscolhido.getAtributo() == AtributoBonus.DEFESA) {
 
-            pokesalEscolhido[i].setDefesa(pokesalEscolhido[i].getDef() 
+            pokesalEscolhido[i].setDefesa(pokesalEscolhido[i].getDef()
                 + acessorioEscolhido.getValorBonus());
           }
 
-          System.out.println(pokesalEscolhido[i].getPokeSal() 
+          System.out.println(pokesalEscolhido[i].getPokeSal()
                 + " equipou " + acessorioEscolhido.getnome() + "!");
 
           System.out.println("Status do pokesal agora é: " + pokesalEscolhido[i]);
@@ -118,10 +118,10 @@ public class Treinador {
 
       if (escolha >= 1 && escolha <= ItemRepository.itens.size()) {
 
-        return ItemRepository.itens.get(escolha - 1);
-      }
+                return ItemRepository.itens.get(escolha - 1);
+            }
 
-      System.out.println("Opção inválida. Tente novamente.");
+            System.out.println("Opção inválida. Tente novamente.");
+        }
     }
-  }
 }
