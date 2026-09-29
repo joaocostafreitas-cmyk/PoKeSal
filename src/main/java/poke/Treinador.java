@@ -6,6 +6,7 @@ import model.AtributoBonus;
 import model.Item;
 import model.PokeSal;
 
+
 public class Treinador {
 
   public PokeSal[] escolhaSeuPokeSal() {

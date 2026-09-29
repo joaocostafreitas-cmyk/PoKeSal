@@ -3,8 +3,14 @@ package poke;
 import java.util.Scanner;
 import model.PokeSal;
 
+/**
+ * Classe responsável por iniciar o programa.
+ */
 public class Main {
 
+  /**
+ * Inicia o programa e configura a batalha.
+ */
   public static void main(String[] args) {
 
     Treinador treinador = new Treinador();

@@ -8,10 +8,10 @@ import model.Terreno;
 
 public class Batalha {
 
-    private PokeSal pokemon1;
-    private PokeSal pokemon2;
+  private PokeSal pokemon1;
+  private PokeSal pokemon2;
 
-    private int hpInicial1;
+  private int hpInicial1;
     private int hpInicial2;
 
     private int vitoriasTreinador1 = 0;
