@@ -4,8 +4,10 @@ import model.Acessorio;
 import model.AtributoBonus;
 import model.PokeSal;
 
+/** Realiza sorteios aleatórios de Pokémon Sal e acessórios. */
 public class ModoAleatorio {
 
+  /** Sorteia um Pokémon Sal para cada jogador.*/
   public PokeSal[] sortearPokeSal() {
 
     int jogadores = 2;
@@ -15,7 +17,7 @@ public class ModoAleatorio {
     for (int i = 0; i < jogadores; i++) {
 
       int sorteio = (int) (Math.random() * PokeSalRepository.poker.size());
-      pokesalEscolhido[i] = PokeSalRepository.CriarCopia(sorteio);
+      pokesalEscolhido[i] = PokeSalRepository.criarCopia(sorteio);
 
       System.out.println("Jogador " + (i + 1) + " recebeu o Pokémon sorteado: "
           + pokesalEscolhido[i].getPokeSal() + "!");
@@ -24,6 +26,7 @@ public class ModoAleatorio {
     return pokesalEscolhido;
   }
 
+  /** Sorteia um acessório para cada Pokémon Sal e aplica seu bônus. */
   public void sortearAcessorio(PokeSal[] pokesalEscolhido) {
 
     for (int i = 0; i < pokesalEscolhido.length; i++) {

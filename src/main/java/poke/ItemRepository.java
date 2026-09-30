@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Item;
 
+/** Lista de itens disponíveis no repositório.*/
 public class ItemRepository {
  
   public static List<Item> itens = new ArrayList<>();

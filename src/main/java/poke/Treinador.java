@@ -6,13 +6,15 @@ import model.AtributoBonus;
 import model.Item;
 import model.PokeSal;
 
-
+/**  Responsável pelas escolhas dos jogadores durante a preparação da batalha. */
 public class Treinador {
-
+  private final Scanner sc = new Scanner(System.in);
+  
+  /** Permite que os dois jogadores escolham seu PokeSal inicial. */
   public PokeSal[] escolhaSeuPokeSal() {
 
     int jogadores = 2;
-    Scanner sc = new Scanner(System.in);
+    
 
     PokeSal[] pokesalEscolhido = new PokeSal[jogadores];
 
@@ -33,22 +35,22 @@ public class Treinador {
 
         if (escolha >= 1 && escolha <= 6) {
 
-          pokesalEscolhido[i] = PokeSalRepository.CriarCopia(escolha - 1);
+          pokesalEscolhido[i] = PokeSalRepository.criarCopia(escolha - 1);
 
           System.out.println("Você escolheu o " + pokesalEscolhido[i].getPokeSal() + "!");
           break;
         }
 
         System.out.println("Opção inválida. Tente novamente.");
+        sc.close();
       }
     }
-
+    
     return pokesalEscolhido;
   }
 
+  /** Permite que cada jogador escolha um acessório para seu PokeSal. */
   public void escolhaAcessorio(PokeSal[] pokesalEscolhido) {
-
-    Scanner sc = new Scanner(System.in);
 
     for (int i = 0; i < pokesalEscolhido.length; i++) {
 
@@ -91,20 +93,17 @@ public class Treinador {
                 + " equipou " + acessorioEscolhido.getnome() + "!");
 
           System.out.println("Status do pokesal agora é: " + pokesalEscolhido[i]);
-
           break;
         }
 
         System.out.println("Opção inválida. Tente novamente.");
+        
       }
     }
   }
 
-
+  /** Permite que o jogador escolha um item. */
   public Item escolherItem() {
-
-    Scanner sc = new Scanner(System.in);
-
     System.out.println("\nEscolha um item:");
 
     for (int i = 0; i < ItemRepository.itens.size(); i++) {
@@ -118,10 +117,11 @@ public class Treinador {
 
       if (escolha >= 1 && escolha <= ItemRepository.itens.size()) {
 
-                return ItemRepository.itens.get(escolha - 1);
-            }
+        return ItemRepository.itens.get(escolha - 1);
+      }
 
-            System.out.println("Opção inválida. Tente novamente.");
-        }
+      System.out.println("Opção inválida. Tente novamente.");
+      
     }
+  }
 }
