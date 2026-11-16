@@ -3,6 +3,8 @@ package poke;
 import java.util.Scanner;
 import model.Item;
 import model.PokeSal;
+import model.RegrasBatalha;
+import model.StatusEfeito;
 import model.Terreno;
 
 public class Batalha {
@@ -19,9 +21,14 @@ public class Batalha {
   private Mochila mochila1;
   private Mochila mochila2;
 
-  private Scanner sc = new Scanner(System.in);
+  private final Scanner sc;
 
   public Batalha(PokeSal pokemon1, PokeSal pokemon2, Mochila mochila1, Mochila mochila2) {
+    this(pokemon1, pokemon2, mochila1, mochila2, new Scanner(System.in));
+  }
+
+  public Batalha(PokeSal pokemon1, PokeSal pokemon2, Mochila mochila1, Mochila mochila2,
+      Scanner sc) {
     this.pokemon1 = pokemon1;
     this.pokemon2 = pokemon2;
 
@@ -30,6 +37,8 @@ public class Batalha {
 
     this.hpInicial1 = pokemon1.getHp();
     this.hpInicial2 = pokemon2.getHp();
+
+    this.sc = sc;
   }
 
   public void iniciarBatalha() {
@@ -46,6 +55,8 @@ public class Batalha {
 
       pokemon1.setHp(hpInicial1);
       pokemon2.setHp(hpInicial2);
+      pokemon1.setStatus(StatusEfeito.NENHUM);
+      pokemon2.setStatus(StatusEfeito.NENHUM);
 
       jogarRodada(terrenoAtual);
     }
@@ -67,7 +78,7 @@ public class Batalha {
       Mochila mochilaPrimeiro;
       Mochila mochilaSegundo;
 
-      if (pokemon1.getSpdComStatus() >= pokemon2.getSpdComStatus()) {
+      if (RegrasBatalha.agePrimeiro(pokemon1, pokemon2)) {
         primeiro = pokemon1;
         segundo = pokemon2;
 
@@ -85,9 +96,6 @@ public class Batalha {
 
       if (!usouItem) {
         atacar(primeiro, segundo, terreno);
-        aplicarRecuperacaoTerreno(primeiro, terreno, primeiro 
-            == pokemon1 ? hpInicial1 : hpInicial2);
-        aplicarEfeitosDeStatus(primeiro);
       }
 
       if (segundo.getHp() <= 0) {
@@ -98,10 +106,13 @@ public class Batalha {
 
       if (!segundoUsouItem) {
         atacar(segundo, primeiro, terreno);
-        aplicarRecuperacaoTerreno(segundo, terreno, segundo 
-            == pokemon1 ? hpInicial1 : hpInicial2);
-        aplicarEfeitosDeStatus(segundo);
       }
+
+      aplicarEfeitosDeStatus(primeiro, hpMaximoDe(primeiro));
+      aplicarEfeitosDeStatus(segundo, hpMaximoDe(segundo));
+
+      aplicarRecuperacaoTerreno(primeiro, terreno, hpMaximoDe(primeiro));
+      aplicarRecuperacaoTerreno(segundo, terreno, hpMaximoDe(segundo));
     }
 
     if (pokemon1.getHp() > 0) {
@@ -114,6 +125,10 @@ public class Batalha {
 
     System.out.println("Placar -> Treinador 1: " + vitoriasTreinador1 
         + " x " + vitoriasTreinador2 + " : Treinador 2");
+  }
+
+  private int hpMaximoDe(PokeSal pokemon) {
+    return pokemon == pokemon1 ? hpInicial1 : hpInicial2;
   }
 
   private boolean escolherAcao(PokeSal pokemon, Mochila mochila) {
@@ -155,62 +170,46 @@ public class Batalha {
   }
 
   private void atacar(PokeSal atacante, PokeSal defensor, Terreno terreno) {
-    double efetividade = atacante.getTipoElemental().efetividadeContra(defensor.getTipoElemental());
-    int dano = atacante.getAkcComStatus() - defensor.getDefComAcessorio();
+    int dano = RegrasBatalha.calcularDano(atacante, defensor, terreno);
 
-    if (dano < 1) {
-      dano = 1;
-    }
-
-    double bonus = terreno.bonusDano(atacante.getTipoElemental());
-    dano = (int) (dano * efetividade * bonus);
-
-    int hpRestante = defensor.getHp() - dano;
-
-    if (hpRestante < 0) {
-      hpRestante = 0;
-    }
-
-    defensor.setHp(hpRestante);
+    defensor.setHp(Math.max(0, defensor.getHp() - dano));
 
     System.out.println(atacante.getPokeSal() + " atacou " + defensor.getPokeSal() 
         + " e causou " + dano + " de dano! HP restante: " + defensor.getHp());
+
+    aplicarStatusPorGolpe(atacante, defensor);
+  }
+
+  private void aplicarStatusPorGolpe(PokeSal atacante, PokeSal defensor) {
+    StatusEfeito novoStatus = RegrasBatalha.statusPorGolpe(atacante, defensor);
+
+    if (novoStatus != StatusEfeito.NENHUM) {
+      defensor.setStatus(novoStatus);
+      System.out.println(defensor.getPokeSal() + " ficou " + novoStatus + "!");
+    }
   }
 
   private void aplicarRecuperacaoTerreno(PokeSal pokemon, Terreno terreno, int hpMaximo) {
-    double percentualRecuperado = terreno.recuperacaoHp(pokemon.getTipoElemental());
+    int cura = RegrasBatalha.calcularCuraTerreno(pokemon, terreno, hpMaximo);
 
-    if (percentualRecuperado > 0) {
-      int cura = (int) (hpMaximo * percentualRecuperado);
-      int novoHp = Math.min(hpMaximo, pokemon.getHp() + cura);
-
-      pokemon.setHp(novoHp);
-
+    if (cura > 0) {
+      pokemon.setHp(Math.min(hpMaximo, pokemon.getHp() + cura));
       System.out.println(pokemon.getPokeSal() 
           + " recuperou " + cura + " de HP no Canteiro Central!");
     }
   }
 
-  private void aplicarEfeitosDeStatus(PokeSal pokemon) {
-    switch (pokemon.getStatus()) {
-      case QUEIMADO:
-        int danoQueimadura = (int) (pokemon.getHp() * 0.05);
-        pokemon.setHp(Math.max(0, pokemon.getHp() - danoQueimadura));
-        System.out.println(pokemon.getPokeSal() + " sofreu " 
-            + danoQueimadura + " de dano da queimadura!");
-        break;
+  private void aplicarEfeitosDeStatus(PokeSal pokemon, int hpMaximo) {
+    if (pokemon.getHp() <= 0) {
+      return;
+    }
 
-      case ENVENENADO:
-        int danoVeneno = (int) (pokemon.getHp() * 0.10);
-        pokemon.setHp(Math.max(0, pokemon.getHp() - danoVeneno));
-        System.out.println(pokemon.getPokeSal() + " sofreu " + danoVeneno + " de dano do veneno!");
-        break;
+    int dano = RegrasBatalha.calcularDanoStatus(pokemon, hpMaximo);
 
-      case PARALISADO:
-        break;
-
-      default:
-        break;
+    if (dano > 0) {
+      pokemon.setHp(Math.max(0, pokemon.getHp() - dano));
+      String causa = pokemon.getStatus() == StatusEfeito.QUEIMADO ? "da queimadura" : "do veneno";
+      System.out.println(pokemon.getPokeSal() + " sofreu " + dano + " de dano " + causa + "!");
     }
   }
 }

@@ -2,19 +2,25 @@ package poke;
 
 import java.util.Scanner;
 import model.Acessorio;
-import model.AtributoBonus;
 import model.Item;
 import model.PokeSal;
 
 /**  Responsável pelas escolhas dos jogadores durante a preparação da batalha. */
 public class Treinador {
-  private final Scanner sc = new Scanner(System.in);
-  
+  private final Scanner sc;
+
+  public Treinador() {
+    this(new Scanner(System.in));
+  }
+
+  public Treinador(Scanner sc) {
+    this.sc = sc;
+  }
+
   /** Permite que os dois jogadores escolham seu PokeSal inicial. */
   public PokeSal[] escolhaSeuPokeSal() {
 
     int jogadores = 2;
-    
 
     PokeSal[] pokesalEscolhido = new PokeSal[jogadores];
 
@@ -42,10 +48,10 @@ public class Treinador {
         }
 
         System.out.println("Opção inválida. Tente novamente.");
-        sc.close();
+
       }
     }
-    
+
     return pokesalEscolhido;
   }
 
@@ -69,25 +75,7 @@ public class Treinador {
 
           Acessorio acessorioEscolhido = AcessorioRepository.acessorios.get(escolha - 1);
 
-          pokesalEscolhido[i].getAcessorio(acessorioEscolhido);
-
-          if (acessorioEscolhido.getAtributo() == AtributoBonus.ATAQUE) {
-
-            pokesalEscolhido[i].setAtk(pokesalEscolhido[i].getAtk()
-                + acessorioEscolhido.getValorBonus());
-          }
-
-          if (acessorioEscolhido.getAtributo() == AtributoBonus.VELOCIDADE) {
-
-            pokesalEscolhido[i].setSpd(pokesalEscolhido[i].getSpd()
-                   + acessorioEscolhido.getValorBonus());
-          }
-
-          if (acessorioEscolhido.getAtributo() == AtributoBonus.DEFESA) {
-
-            pokesalEscolhido[i].setDefesa(pokesalEscolhido[i].getDef()
-                + acessorioEscolhido.getValorBonus());
-          }
+          pokesalEscolhido[i].setAcessorio(acessorioEscolhido);
 
           System.out.println(pokesalEscolhido[i].getPokeSal()
                 + " equipou " + acessorioEscolhido.getnome() + "!");
@@ -97,7 +85,7 @@ public class Treinador {
         }
 
         System.out.println("Opção inválida. Tente novamente.");
-        
+
       }
     }
   }
@@ -121,7 +109,7 @@ public class Treinador {
       }
 
       System.out.println("Opção inválida. Tente novamente.");
-      
+
     }
   }
 }

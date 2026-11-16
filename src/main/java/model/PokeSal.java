@@ -10,6 +10,7 @@ public class PokeSal {
   private TipoElemental tipoElemental;
   private Acessorio acessorio;
   private StatusEfeito status = StatusEfeito.NENHUM;
+  private int turnosComStatus = 0;
 
   public PokeSal(String pokemon, int hp, int atk, int def, int spd, TipoElemental tipoElemental) {
     this.pokeSal = pokemon;
@@ -65,7 +66,7 @@ public class PokeSal {
     this.acessorio = acessorio;
   }
 
-  public Acessorio getAcessorio(Acessorio acessorioEscolhido) {
+  public Acessorio getAcessorio() {
     return acessorio;
   }
 
@@ -75,6 +76,12 @@ public class PokeSal {
 
   public void setStatus(StatusEfeito status) {
     this.status = status;
+    this.turnosComStatus = 0;
+  }
+
+  public int avancarTurnoStatus() {
+    turnosComStatus++;
+    return turnosComStatus;
   }
 
   public int getAkcComStatus() {
@@ -99,10 +106,11 @@ public class PokeSal {
     }
     return def;
   }
-      
-  public String toString() {
-    return pokeSal + " [HP=" + hp + ", ATK=" + atk + ", DEF="
-      + def + ", SPD=" + spd + ", Tipo=" + tipoElemental + "]";
 
+  @Override
+  public String toString() {
+    return pokeSal + " [HP=" + hp + ", ATK=" + getAkcComStatus() + ", DEF="
+        + getDefComAcessorio() + ", SPD=" + getSpdComStatus()
+        + ", Tipo=" + tipoElemental + "]";
   }
 }

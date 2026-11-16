@@ -13,6 +13,9 @@ public enum TipoElemental {
     if (this == FOGO && defensor == AGUA) {
       return 0.5;
     }
+    if (this == FOGO && defensor == PLANTA) {
+      return 2.0;
+    }
     if (this == AGUA && defensor == PLANTA) {
       return 0.5;
     }
@@ -20,5 +23,14 @@ public enum TipoElemental {
       return 0.5;
     }
     return 1.0;
+  }
+ public StatusEfeito statusQueAplica() {
+    if (this == FOGO) {
+      return StatusEfeito.QUEIMADO;
+    }
+    if (this == PLANTA) {
+      return StatusEfeito.ENVENENADO;
+    }
+    return StatusEfeito.PARALISADO;
   }
 }

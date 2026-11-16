@@ -12,7 +12,7 @@ public class ItemRepository {
   static {
     itens.add(new Item("Potion", 20));
     itens.add(new Item("Super Potion", 60));
-    itens.add(new Item("Antídodo", 15));
+        itens.add(new Item("Antídoto", 0, true));
   }
 
 }

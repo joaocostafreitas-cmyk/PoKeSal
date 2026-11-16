@@ -1,7 +1,6 @@
 package poke;
 
 import model.Acessorio;
-import model.AtributoBonus;
 import model.PokeSal;
 
 /** Realiza sorteios aleatórios de Pokémon Sal e acessórios. */
@@ -26,7 +25,7 @@ public class ModoAleatorio {
     return pokesalEscolhido;
   }
 
-  /** Sorteia um acessório para cada Pokémon Sal e aplica seu bônus. */
+  /** Sorteia um acessório para cada Pokémon Sal e o equipa. */
   public void sortearAcessorio(PokeSal[] pokesalEscolhido) {
 
     for (int i = 0; i < pokesalEscolhido.length; i++) {
@@ -35,25 +34,7 @@ public class ModoAleatorio {
 
       Acessorio acessorioEscolhido = AcessorioRepository.acessorios.get(sorteio);
 
-      pokesalEscolhido[i].getAcessorio(acessorioEscolhido);
-
-      if (acessorioEscolhido.getAtributo() == AtributoBonus.ATAQUE) {
-
-        pokesalEscolhido[i].setAtk(pokesalEscolhido[i].getAtk() 
-            + acessorioEscolhido.getValorBonus());
-      }
-
-      if (acessorioEscolhido.getAtributo() == AtributoBonus.VELOCIDADE) {
-
-        pokesalEscolhido[i].setSpd(pokesalEscolhido[i].getSpd()
-            + acessorioEscolhido.getValorBonus());
-      }
-
-      if (acessorioEscolhido.getAtributo() == AtributoBonus.DEFESA) {
-
-        pokesalEscolhido[i].setDefesa(pokesalEscolhido[i].getDef()
-                    + acessorioEscolhido.getValorBonus());
-      }
+      pokesalEscolhido[i].setAcessorio(acessorioEscolhido);
 
       System.out.println("Jogador " + (i + 1) + " teve sorteado o acessório: "
                   + acessorioEscolhido.getnome() + " para o "
@@ -64,4 +45,3 @@ public class ModoAleatorio {
   }
 
 }
-
