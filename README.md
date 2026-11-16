@@ -1,7 +1,7 @@
 
 # 🎮 PokeSal - Simulador de Batalha
 
-Link do video não listado do Youtube 🔴: https://youtu.be/c-tsDHOyI7E
+
 
 Link do diagrama UML 📋: https://app.diagrams.net/#G1lv2FYsnngrp2-LyfjmSByS8Oz3fnPhVd#%7B"pageId"%3A"q2NDj1pSNoo5LTh0LEM2"%7D
 
