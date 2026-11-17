@@ -1,22 +1,22 @@
 package poke;
 
 import java.util.Scanner;
+import model.GeradorAleatorio;
 import model.PokeSal;
+import model.RegistroBatalha;
 
-/**
- * Classe responsável por iniciar o programa.
- */
+
 public class Main {
 
-  /**
- * Inicia o programa e configura a batalha.
- */
+  
   public static void main(String[] args) {
 
-    Treinador treinador = new Treinador();
-    ModoAleatorio modoAleatorio = new ModoAleatorio();
-
     Scanner sc = new Scanner(System.in);
+    GeradorAleatorio gerador = new GeradorAleatorioPadrao();
+    RegistroBatalha registro = new RegistroBatalhaConsole(System.out);
+
+    Treinador treinador = new Treinador(sc);
+    ModoAleatorio modoAleatorio = new ModoAleatorio(gerador);
 
     int escolha;
     PokeSal[] pokeSals;
@@ -32,12 +32,10 @@ public class Main {
 
       treinador.escolhaAcessorio(pokeSals);
 
-            
       mochilas = Mochila.criarMochilas(2);
 
     } else if (escolha == 2) {
 
-            
       pokeSals = modoAleatorio.sortearPokeSal();
 
       modoAleatorio.sortearAcessorio(pokeSals);
@@ -53,7 +51,8 @@ public class Main {
 
     System.out.println("\n=== INICIANDO BATALHA ===");
 
-    Batalha batalha = new Batalha(pokeSals[0], pokeSals[1], mochilas[0], mochilas[1]);
+    Batalha batalha = new Batalha(pokeSals[0], pokeSals[1], mochilas[0], mochilas[1],
+        sc, gerador, registro);
 
     batalha.iniciarBatalha();
 

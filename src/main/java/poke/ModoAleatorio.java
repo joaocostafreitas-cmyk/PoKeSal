@@ -1,10 +1,17 @@
 package poke;
 
 import model.Acessorio;
+import model.GeradorAleatorio;
 import model.PokeSal;
 
 /** Realiza sorteios aleatórios de Pokémon Sal e acessórios. */
 public class ModoAleatorio {
+
+  private final GeradorAleatorio gerador;
+
+  public ModoAleatorio(GeradorAleatorio gerador) {
+    this.gerador = gerador;
+  }
 
   /** Sorteia um Pokémon Sal para cada jogador.*/
   public PokeSal[] sortearPokeSal() {
@@ -15,7 +22,7 @@ public class ModoAleatorio {
 
     for (int i = 0; i < jogadores; i++) {
 
-      int sorteio = (int) (Math.random() * PokeSalRepository.poker.size());
+      int sorteio = gerador.proximoInt(PokeSalRepository.poker.size());
       pokesalEscolhido[i] = PokeSalRepository.criarCopia(sorteio);
 
       System.out.println("Jogador " + (i + 1) + " recebeu o Pokémon sorteado: "
@@ -30,7 +37,7 @@ public class ModoAleatorio {
 
     for (int i = 0; i < pokesalEscolhido.length; i++) {
 
-      int sorteio = (int) (Math.random() * AcessorioRepository.acessorios.size());
+      int sorteio = gerador.proximoInt(AcessorioRepository.acessorios.size());
 
       Acessorio acessorioEscolhido = AcessorioRepository.acessorios.get(sorteio);
 

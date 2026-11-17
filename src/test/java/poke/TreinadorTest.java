@@ -1,51 +1,30 @@
 package poke;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals; 
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 
 import java.io.ByteArrayInputStream;
+import java.util.Scanner;
 import model.PokeSal;
 import model.TipoElemental;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 
 public class TreinadorTest {
 
-  Treinador treinador;
-
-  @BeforeEach
-    void configurar() {
-    treinador = new Treinador();
-
-  }
-
   @Test
-public void testEscolhaSeuPokeSal() {
+  void escolhaSeuPokeSalCriaUmaCopiaParaCadaJogador() {
+    Scanner entrada = new Scanner(new ByteArrayInputStream("1\n1\n".getBytes()));
+    Treinador treinador = new Treinador(entrada);
 
-    System.out.println("1 Fase :");
-    String entrada = "1\n1\n";
-    System.setIn(new ByteArrayInputStream(entrada.getBytes()));
+    PokeSal[] escolhidos = treinador.escolhaSeuPokeSal();
 
-    System.out.println("2 entrada");
+    assertEquals("BulbaSal", escolhidos[0].getPokeSal());
+    assertEquals(200, escolhidos[0].getHp());
+    assertEquals(100, escolhidos[0].getAtk());
+    assertEquals(50, escolhidos[0].getDef());
+    assertEquals(25, escolhidos[0].getSpd());
+    assertEquals(TipoElemental.PLANTA, escolhidos[0].getTipoElemental());
 
-    PokeSal[] pokesalEscolhido = treinador.escolhaSeuPokeSal();
-
-    System.out.println("3 escolha ");
-
-    assertEquals("BulbaSal", pokesalEscolhido[0].getPokeSal());
-
-    System.out.println("4 primeiro passou");
-
-    assertEquals(200, pokesalEscolhido[0].getHp());
-    assertEquals(100, pokesalEscolhido[0].getAtk());
-    assertEquals(50, pokesalEscolhido[0].getDef());
-    assertEquals(25, pokesalEscolhido[0].getSpd());
-    assertEquals(TipoElemental.PLANTA, pokesalEscolhido[0].getTipoElemental());
-
-    System.out.println("2 Fase :");
-    assertNotEquals(pokesalEscolhido[1], pokesalEscolhido[0]);
-
-    System.out.println("6  Fim'-' ");
+    assertNotSame(escolhidos[1], escolhidos[0]);
   }
 }

@@ -1,9 +1,12 @@
 package poke;
 
 import java.util.Scanner;
+import model.GeradorAleatorio;
 import model.Item;
 import model.PokeSal;
+import model.RegistroBatalha;
 import model.RegrasBatalha;
+import model.ResultadoGolpe;
 import model.StatusEfeito;
 import model.Terreno;
 
@@ -22,13 +25,11 @@ public class Batalha {
   private Mochila mochila2;
 
   private final Scanner sc;
-
-  public Batalha(PokeSal pokemon1, PokeSal pokemon2, Mochila mochila1, Mochila mochila2) {
-    this(pokemon1, pokemon2, mochila1, mochila2, new Scanner(System.in));
-  }
+  private final GeradorAleatorio gerador;
+  private final RegistroBatalha registro;
 
   public Batalha(PokeSal pokemon1, PokeSal pokemon2, Mochila mochila1, Mochila mochila2,
-      Scanner sc) {
+      Scanner sc, GeradorAleatorio gerador, RegistroBatalha registro) {
     this.pokemon1 = pokemon1;
     this.pokemon2 = pokemon2;
 
@@ -39,6 +40,8 @@ public class Batalha {
     this.hpInicial2 = pokemon2.getHp();
 
     this.sc = sc;
+    this.gerador = gerador;
+    this.registro = registro;
   }
 
   public void iniciarBatalha() {
@@ -145,7 +148,15 @@ public class Batalha {
       }
 
       Item item = escolherItem();
-      return mochila.usarItem(item, pokemon, pokemon == pokemon1 ? hpInicial1 : hpInicial2);
+      boolean usou = mochila.usarItem(item, pokemon,
+          pokemon == pokemon1 ? hpInicial1 : hpInicial2);
+
+      if (usou) {
+        registro.registrarUsoItem(pokemon, item, mochila.getItensUsados(),
+            Mochila.LIMITE_ITENS_POR_BATALHA);
+      }
+
+      return usou;
     }
 
     return false;
@@ -170,12 +181,18 @@ public class Batalha {
   }
 
   private void atacar(PokeSal atacante, PokeSal defensor, Terreno terreno) {
-    int dano = RegrasBatalha.calcularDano(atacante, defensor, terreno);
+    ResultadoGolpe resultado = RegrasBatalha.resolverGolpe(atacante, defensor, terreno, gerador);
 
+    registro.registrarAtaque(atacante, defensor, resultado);
+
+    if (!resultado.isAcertou()) {
+      return;
+    }
+
+    int dano = resultado.getDano();
     defensor.setHp(Math.max(0, defensor.getHp() - dano));
 
-    System.out.println(atacante.getPokeSal() + " atacou " + defensor.getPokeSal() 
-        + " e causou " + dano + " de dano! HP restante: " + defensor.getHp());
+    registro.registrarDano(defensor, dano);
 
     aplicarStatusPorGolpe(atacante, defensor);
   }
@@ -185,7 +202,7 @@ public class Batalha {
 
     if (novoStatus != StatusEfeito.NENHUM) {
       defensor.setStatus(novoStatus);
-      System.out.println(defensor.getPokeSal() + " ficou " + novoStatus + "!");
+      registro.registrarStatusAplicado(defensor, novoStatus);
     }
   }
 
@@ -194,8 +211,7 @@ public class Batalha {
 
     if (cura > 0) {
       pokemon.setHp(Math.min(hpMaximo, pokemon.getHp() + cura));
-      System.out.println(pokemon.getPokeSal() 
-          + " recuperou " + cura + " de HP no Canteiro Central!");
+      registro.registrarEfeitoTerreno(pokemon, terreno, cura);
     }
   }
 
@@ -208,8 +224,7 @@ public class Batalha {
 
     if (dano > 0) {
       pokemon.setHp(Math.max(0, pokemon.getHp() - dano));
-      String causa = pokemon.getStatus() == StatusEfeito.QUEIMADO ? "da queimadura" : "do veneno";
-      System.out.println(pokemon.getPokeSal() + " sofreu " + dano + " de dano " + causa + "!");
+      registro.registrarEfeitoStatus(pokemon, pokemon.getStatus(), dano);
     }
   }
 }

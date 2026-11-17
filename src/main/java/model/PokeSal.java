@@ -8,17 +8,25 @@ public class PokeSal {
   private int def;
   private int spd;
   private TipoElemental tipoElemental;
+  private final Golpe golpe;
   private Acessorio acessorio;
   private StatusEfeito status = StatusEfeito.NENHUM;
   private int turnosComStatus = 0;
 
   public PokeSal(String pokemon, int hp, int atk, int def, int spd, TipoElemental tipoElemental) {
+    this(pokemon, hp, atk, def, spd, tipoElemental, Golpe.BASICO);
+  }
+
+  
+  public PokeSal(String pokemon, int hp, int atk, int def, int spd, TipoElemental tipoElemental,
+      Golpe golpe) {
     this.pokeSal = pokemon;
     this.hp = hp;
     this.atk = atk;
     this.def = def;
     this.spd = spd;
     this.tipoElemental = tipoElemental;
+    this.golpe = golpe;
   }
 
   public String getPokeSal() { 
@@ -60,6 +68,10 @@ public class PokeSal {
 
   public TipoElemental getTipoElemental() { 
     return tipoElemental; 
+  }
+
+  public Golpe getGolpe() {
+    return golpe;
   }
 
   public void setAcessorio(Acessorio acessorio) {
@@ -111,6 +123,6 @@ public class PokeSal {
   public String toString() {
     return pokeSal + " [HP=" + hp + ", ATK=" + getAkcComStatus() + ", DEF="
         + getDefComAcessorio() + ", SPD=" + getSpdComStatus()
-        + ", Tipo=" + tipoElemental + "]";
+        + ", Tipo=" + tipoElemental + ", Golpe=" + golpe + "]";
   }
 }
