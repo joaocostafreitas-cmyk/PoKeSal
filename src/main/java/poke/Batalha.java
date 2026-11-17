@@ -207,12 +207,7 @@ public class Batalha {
   }
 
   private void aplicarRecuperacaoTerreno(PokeSal pokemon, Terreno terreno, int hpMaximo) {
-    int cura = RegrasBatalha.calcularCuraTerreno(pokemon, terreno, hpMaximo);
-
-    if (cura > 0) {
-      pokemon.setHp(Math.min(hpMaximo, pokemon.getHp() + cura));
-      registro.registrarEfeitoTerreno(pokemon, terreno, cura);
-    }
+    
   }
 
   private void aplicarEfeitosDeStatus(PokeSal pokemon, int hpMaximo) {
