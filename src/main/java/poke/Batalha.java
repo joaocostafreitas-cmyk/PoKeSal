@@ -206,9 +206,46 @@ public class Batalha {
     }
   }
 
-  private void aplicarRecuperacaoTerreno(PokeSal pokemon, Terreno terreno, int hpMaximo) {
-    
+  private void aplicarRecuperacaoTerreno(
+    PokeSal pokemon,
+    Terreno terreno,
+    int hpMaximo
+) {
+  if (pokemon.getHp() <= 0 || terreno == null) {
+    return;
   }
+
+  int cura = (int) (
+      hpMaximo
+          * terreno.recuperacaoHp(
+              pokemon.getTipoElemental()
+          )
+  );
+
+  if (cura <= 0) {
+    return;
+  }
+
+  int hpAntes = pokemon.getHp();
+
+  pokemon.setHp(
+      Math.min(
+          hpMaximo,
+          hpAntes + cura
+      )
+  );
+
+  int curaAplicada = pokemon.getHp() - hpAntes;
+
+  if (curaAplicada > 0) {
+    registro.registrarEfeitoTerreno(
+        pokemon,
+        terreno,
+        curaAplicada
+    );
+  }
+}
+
 
   private void aplicarEfeitosDeStatus(PokeSal pokemon, int hpMaximo) {
     if (pokemon.getHp() <= 0) {
