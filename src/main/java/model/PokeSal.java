@@ -17,11 +17,7 @@ public class PokeSal {
   private StatusEfeito status = StatusEfeito.NENHUM;
   private int turnosComStatus = 0;
 
-  /*
-   * Nova regra:
-   * depois de perder duas rodadas consecutivas,
-   * o Pokésal fica imune aos status QUEIMADO e ENVENENADO.
-   */
+ 
   private int derrotasConsecutivas = 0;
   private boolean imuneAQueimadoEEnvenenado = false;
 

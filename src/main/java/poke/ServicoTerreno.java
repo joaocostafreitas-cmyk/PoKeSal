@@ -27,7 +27,7 @@ public class ServicoTerreno {
             return 1.0;
         }
         
-        if ("Asfalto Quente".equalsIgnoreCase(terreno.toString()) && !isDia()) {
+        if (terreno == Terreno.ASFALTO_QUENTE && !isDia()) {
             return 1.0;
         }
         
@@ -41,7 +41,7 @@ public class ServicoTerreno {
         
         double recuperacao = terreno.recuperacaoHp(pokemon.getTipoElemental());
         
-        if ("Asfalto Quente".equalsIgnoreCase(terreno.toString()) && !isDia()) {
+        if (terreno == Terreno.ASFALTO_QUENTE && !isDia()) {
             recuperacao = 0.0;
         }
         
