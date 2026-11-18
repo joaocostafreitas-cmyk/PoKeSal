@@ -43,16 +43,38 @@ public final class RegrasBatalha {
     return new ResultadoGolpe(true, critico, dano);
   }
 
-  public static StatusEfeito statusPorGolpe(PokeSal atacante, PokeSal defensor) {
-    boolean superEfetivo =
-        atacante.getTipoElemental().efetividadeContra(defensor.getTipoElemental()) > 1.0;
-    boolean semStatus = defensor.getStatus() == StatusEfeito.NENHUM;
+public static StatusEfeito statusPorGolpe(
+    PokeSal atacante,
+    PokeSal defensor
+) {
+  boolean superEfetivo =
+      atacante.getTipoElemental()
+          .efetividadeContra(defensor.getTipoElemental()) > 1.0;
 
-    if (superEfetivo && semStatus && defensor.getHp() > 0) {
-      return atacante.getTipoElemental().statusQueAplica();
-    }
+  boolean semStatus =
+      defensor.getStatus() == StatusEfeito.NENHUM;
+
+  if (!superEfetivo || !semStatus || defensor.getHp() <= 0) {
     return StatusEfeito.NENHUM;
   }
+
+  StatusEfeito novoStatus =
+      atacante.getTipoElemental().statusQueAplica();
+
+  boolean statusBloqueado =
+      defensor.isImuneAQueimadoEEnvenenado()
+          && (
+              novoStatus == StatusEfeito.QUEIMADO
+                  || novoStatus == StatusEfeito.ENVENENADO
+          );
+
+  if (statusBloqueado) {
+    return StatusEfeito.NENHUM;
+  }
+
+  return novoStatus;
+}
+
 
   public static int calcularDanoStatus(PokeSal pokemon, int hpMaximo) {
     if (pokemon.getStatus() == StatusEfeito.QUEIMADO) {
